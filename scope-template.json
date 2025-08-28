@@ -1,0 +1,56 @@
+{
+    "program": "Example Bug Bounty",
+    "domains": [
+        "app.example.com",
+        "api.example.com"
+    ],
+    "paths": {
+        "allow": [
+            "/api/",
+            "/users/",
+            "/orders/"
+        ],
+        "deny": [
+            "/admin/",
+            "/internal/"
+        ]
+    },
+    "identities": [
+        {
+            "name": "anon",
+            "auth_type": "none"
+        },
+        {
+            "name": "userA",
+            "auth_type": "basic",
+            "credentials": {
+                "username": "userA@example.com",
+                "password": "securepassword123"
+            }
+        },
+        {
+            "name": "userB",
+            "auth_type": "bearer",
+            "credentials": {
+                "token": "VALID_JWT_TOKEN"
+            }
+        }
+    ],
+    "rate_limit": {
+        "requests_per_second": 5,
+        "burst": 10,
+        "backoff": true
+    },
+    "options": {
+        "follow_redirects": true,
+        "verify_ssl": true,
+        "max_depth": 3,
+        "max_concurrent": 10,
+        "timeout_seconds": 15
+    },
+    "output": {
+        "results_dir": "results/",
+        "redact_headers": ["Authorization", "Cookie"],
+        "redact_fields": ["password", "token"]
+    }
+}
